@@ -1,15 +1,6 @@
-// searchStore.js
-import {create }from 'zustand';
+import create from 'zustand';
+
 import { Product } from '@/interface/page';
-
-// export interface Product {
-//   _id: string;
-//   name: string;
-//   description: string;
-//   price: number;
-//   image: string;
-// }
-
 interface SearchStore {
   search: string;
   setSearch: (search: string) => void;
@@ -21,24 +12,23 @@ interface SearchStore {
 
 export const useSearchStore = create<SearchStore>((set) => ({
   search: '',
-  setSearch: (search) => set({ search }),
+  setSearch: (search: string) => set(() => ({ search })),
   products: [],
   fetchProducts: async () => {
     const response = await fetch('/api/product');
-    const data = await response.json();
-    set({ products: data });
+    const data: Product[] = await response.json();
+    set(() => ({ products: data }));
   },
-  updateProduct: (updatedProduct) => {
+  updateProduct: (updatedProduct: Product) => {
     set((state) => ({
       products: state.products.map((product) =>
         product._id === updatedProduct._id ? updatedProduct : product
       ),
     }));
   },
-  deleteProduct: (productId) => {
+  deleteProduct: (productId: string) => {
     set((state) => ({
       products: state.products.filter((product) => product._id !== productId),
     }));
   },
 }));
-
