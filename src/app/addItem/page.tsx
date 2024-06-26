@@ -1,3 +1,4 @@
+"use client"
 import * as Dialog from '@radix-ui/react-dialog';
 import { Button, Text, TextField } from '@radix-ui/themes';
 import React, { useState } from 'react';
