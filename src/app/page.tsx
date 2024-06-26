@@ -1,7 +1,7 @@
 "use client";
 import Head from 'next/head';
 import PaginatedCards from '@/components/pagination';
-import AddItem from './addItem/page';
+import AddItem from '../components/AddItemDialog';
 import { useState } from 'react';
 import { Product } from '@/interface/page';
 
