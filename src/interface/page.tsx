@@ -12,3 +12,5 @@ export  interface AddProduct {
     price: number;
     image: string;
   }
+
+
