@@ -70,7 +70,7 @@ const AddItem: React.FC<AddItemProps> = ({ onAdd }) => {
             <Text as="div" className="text-sm font-bold mb-1">
               Name
             </Text>
-            <TextField.Root
+            <input
               className="w-full px-3 py-2 border border-gray-300 rounded"
               placeholder="Enter Product Title"
               {...register('name')}
@@ -81,7 +81,7 @@ const AddItem: React.FC<AddItemProps> = ({ onAdd }) => {
             <Text as="div" className="text-sm font-bold mb-1">
               Description
             </Text>
-            <TextField.Root
+            <input
               className="w-full px-3 py-2 border border-gray-300 rounded"
               placeholder="Enter Product Description"
               {...register('description')}
@@ -92,7 +92,7 @@ const AddItem: React.FC<AddItemProps> = ({ onAdd }) => {
             <Text as="div" className="text-sm font-bold mb-1">
               Price
             </Text>
-            <TextField.Root
+            <input
               className="w-full px-3 py-2 border border-gray-300 rounded"
               placeholder="Enter Product Price"
               type='number'
