@@ -154,18 +154,18 @@ const Card = ({ product, onDelete, onUpdate }: CardData) => {
           </div>
         </div>
         {isEditing && (
-          <div className="flex justify-end">
-            <button
-              onClick={handleUpdate}
-              className="bg-blue-500 text-white px-4 py-2 rounded mr-2 hover:bg-blue-600 transition-colors duration-300"
-            >
-              Save
-            </button>
+          <div className="flex gap-1 justify-end">
             <button
               onClick={() => setIsEditing(false)}
               className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors duration-300"
             >
               Cancel
+            </button>
+            <button
+              onClick={handleUpdate}
+              className="bg-blue-500 text-white px-4 py-2 rounded mr-2 hover:bg-blue-600 transition-colors duration-300"
+            >
+              Save
             </button>
           </div>
         )}
