@@ -176,7 +176,7 @@ const Card = ({ product, onDelete, onUpdate }: CardData) => {
         <Dialog.Content className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg p-6 shadow-lg">
           <Dialog.Title className="text-lg font-bold">Confirm Delete</Dialog.Title>
           <Dialog.Description className="mt-2 text-gray-700">
-            Are you sure you want to delete the product "{product.name}"?
+            Are you sure you want to delete the product {product.name}?
           </Dialog.Description>
           <div className="mt-4 flex gap-4 justify-end">
             <Dialog.Close asChild>
