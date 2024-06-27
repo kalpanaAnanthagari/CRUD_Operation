@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Product } from '@/interface/page';
 import { useSearchStore } from '@/util/search.Store';
@@ -10,40 +11,37 @@ type CardData = {
 }
 
 const Card = ({ product, onDelete, onUpdate }: CardData) => {
-const { search, products, fetchProducts, updateProduct, deleteProduct } = useSearchStore();
+  const { search, products, fetchProducts, updateProduct, deleteProduct } = useSearchStore();
   const [showOptions, setShowOptions] = useState(false);
-  const [updatedProduct, setUpdatedProduct] = useState(product); // State to hold updated product
+  const [updatedProduct, setUpdatedProduct] = useState(product);
   const [isEditing, setIsEditing] = useState(false);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false); // State to handle dialog visibility
   const cardRef = useRef<HTMLDivElement>(null);
 
-  // Function to toggle options dropdown
   const toggleOptions = () => {
     setShowOptions(!showOptions);
   };
 
-  // Handle input change for editable fields
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setUpdatedProduct({ ...updatedProduct, [name]: value });
   };
 
-  // Handle update operation
   const handleUpdate = async () => {
     try {
-       updateProduct(updatedProduct);
+      updateProduct(updatedProduct);
       const res = await fetch(`/api/product/${product._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(updatedProduct), // Send updatedProduct state
+        body: JSON.stringify(updatedProduct),
       });
-      
+
       if (res.ok) {
         const updatedProductData = await res.json();
-        onUpdate(updatedProductData); // Update parent state with updated data
-        setIsEditing(false); // Exit edit mode
+        onUpdate(updatedProductData);
+        setIsEditing(false);
       } else {
         console.error('Failed to update the product');
       }
@@ -52,10 +50,9 @@ const { search, products, fetchProducts, updateProduct, deleteProduct } = useSea
     }
   };
 
-  // Handle delete operation
   const handleDelete = async () => {
     try {
-        deleteProduct(product._id);
+      deleteProduct(product._id);
       const res = await fetch(`/api/product/${product._id}`, {
         method: 'DELETE',
         headers: {
@@ -64,7 +61,7 @@ const { search, products, fetchProducts, updateProduct, deleteProduct } = useSea
       });
 
       if (res.ok) {
-        onDelete(product._id); // Delete from parent component
+        onDelete(product._id);
       } else {
         console.error('Failed to delete the product');
       }
@@ -72,6 +69,7 @@ const { search, products, fetchProducts, updateProduct, deleteProduct } = useSea
       console.error('Error deleting product:', error);
     }
   };
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (cardRef.current && !cardRef.current.contains(event.target as Node)) {
@@ -87,7 +85,7 @@ const { search, products, fetchProducts, updateProduct, deleteProduct } = useSea
   }, []);
 
   return (
-<div ref={cardRef} className="rounded shadow-lg overflow-hidden">
+    <div ref={cardRef} className="rounded shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 hover:bg-gray-100">
       <img className="w-full h-48 object-cover" src={product.image} loading='lazy' alt={product.name} />
       <div className="px-6 py-4">
         <div className='flex justify-between'>
@@ -114,13 +112,13 @@ const { search, products, fetchProducts, updateProduct, deleteProduct } = useSea
               <div className="absolute right-0 mt-2 w-28 bg-white border border-gray-300 rounded shadow-md z-10">
                 <button
                   className="block px-4 py-2 text-left text-gray-800 hover:bg-gray-100 w-full"
-                  onClick={() => {setIsEditing(true) ,toggleOptions() }}
+                  onClick={() => { setIsEditing(true); toggleOptions() }}
                 >
                   Update
                 </button>
                 <button
                   className="block px-4 py-2 text-left text-gray-800 hover:bg-gray-100 w-full"
-                  onClick={()=>{ setIsDialogOpen(true), toggleOptions()}}
+                  onClick={() => {setIsDialogOpen(true); toggleOptions()} }// Open the dialog
                 >
                   Delete
                 </button>
@@ -135,13 +133,13 @@ const { search, products, fetchProducts, updateProduct, deleteProduct } = useSea
                 name="description"
                 value={updatedProduct.description}
                 onChange={handleInputChange}
-                className="w-full border border-gray-300 rounded px-2 py-1 mb-2 "
+                className="w-full border border-gray-300 rounded px-2 py-1 mb-2"
               />
             ) : (
               <p className="text-gray-700 text-base md:line-clamp-3 mobile:line-clamp-2">{product.description}</p>
             )}
           </div>
-           <div className="text-gray-700 text-base">
+          <div className="text-gray-700 text-base">
             {isEditing ? (
               <input
                 type="number"
@@ -159,13 +157,13 @@ const { search, products, fetchProducts, updateProduct, deleteProduct } = useSea
           <div className="flex justify-end">
             <button
               onClick={handleUpdate}
-              className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+              className="bg-blue-500 text-white px-4 py-2 rounded mr-2 hover:bg-blue-600 transition-colors duration-300"
             >
               Save
             </button>
             <button
               onClick={() => setIsEditing(false)}
-              className="bg-gray-500 text-white px-4 py-2 rounded"
+              className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors duration-300"
             >
               Cancel
             </button>
@@ -180,10 +178,10 @@ const { search, products, fetchProducts, updateProduct, deleteProduct } = useSea
           <Dialog.Description className="mt-2 text-gray-700">
             Are you sure you want to delete the product "{product.name}"?
           </Dialog.Description>
-          <div className="mt-4 flex  gap-4 justify-end">
+          <div className="mt-4 flex gap-4 justify-end">
             <Dialog.Close asChild>
               <button
-                className="bg-gray-500 text-white px-4 py-2 rounded"
+                className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors duration-300"
               >
                 Cancel
               </button>
@@ -191,7 +189,7 @@ const { search, products, fetchProducts, updateProduct, deleteProduct } = useSea
             <Dialog.Close asChild>
               <button
                 onClick={handleDelete}
-                className="bg-red-500 text-white px-4 py-2 rounded mr-2"
+                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors duration-300"
               >
                 Delete
               </button>
