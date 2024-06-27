@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Product } from '@/interface/page';
 import { useSearchStore } from '@/util/search.Store';
+import * as Dialog from '@radix-ui/react-dialog';
 
 type CardData = {
   product: Product;
@@ -13,7 +14,7 @@ const { search, products, fetchProducts, updateProduct, deleteProduct } = useSea
   const [showOptions, setShowOptions] = useState(false);
   const [updatedProduct, setUpdatedProduct] = useState(product); // State to hold updated product
   const [isEditing, setIsEditing] = useState(false);
-  // const [products, setProducts] = useState<CardProps[]>([]);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
   // Function to toggle options dropdown
@@ -119,7 +120,7 @@ const { search, products, fetchProducts, updateProduct, deleteProduct } = useSea
                 </button>
                 <button
                   className="block px-4 py-2 text-left text-gray-800 hover:bg-gray-100 w-full"
-                  onClick={handleDelete}
+                  onClick={()=>{ setIsDialogOpen(true), toggleOptions()}}
                 >
                   Delete
                 </button>
@@ -171,6 +172,33 @@ const { search, products, fetchProducts, updateProduct, deleteProduct } = useSea
           </div>
         )}
       </div>
+
+      <Dialog.Root open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-30" />
+        <Dialog.Content className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg p-6 shadow-lg">
+          <Dialog.Title className="text-lg font-bold">Confirm Delete</Dialog.Title>
+          <Dialog.Description className="mt-2 text-gray-700">
+            Are you sure you want to delete the product "{product.name}"?
+          </Dialog.Description>
+          <div className="mt-4 flex  gap-4 justify-end">
+            <Dialog.Close asChild>
+              <button
+                className="bg-gray-500 text-white px-4 py-2 rounded"
+              >
+                Cancel
+              </button>
+            </Dialog.Close>
+            <Dialog.Close asChild>
+              <button
+                onClick={handleDelete}
+                className="bg-red-500 text-white px-4 py-2 rounded mr-2"
+              >
+                Delete
+              </button>
+            </Dialog.Close>
+          </div>
+        </Dialog.Content>
+      </Dialog.Root>
     </div>
   );
 };
