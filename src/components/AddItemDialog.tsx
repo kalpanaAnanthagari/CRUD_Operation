@@ -81,7 +81,7 @@ const AddItem: React.FC<AddItemProps> = ({ onAdd }) => {
             <Text as="div" className="text-sm font-bold mb-1">
               Description
             </Text>
-            <input
+            <textarea
               className="w-full px-3 py-2 border border-gray-300 rounded"
               placeholder="Enter Product Description"
               {...register('description')}
