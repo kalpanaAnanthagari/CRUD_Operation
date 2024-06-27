@@ -86,7 +86,7 @@ const Card = ({ product, onDelete, onUpdate }: CardData) => {
 
   return (
     <div ref={cardRef} className="rounded shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 hover:bg-gray-100">
-      <img className="w-full h-48 object-cover" src={product.image} loading='lazy' alt={product.name} />
+      <img className="w-full h-48 object-cover transform transition-transform duration-300 hover:scale-110" src={product.image} loading='lazy' alt={product.name} />
       <div className="px-6 py-4">
         <div className='flex justify-between'>
           <div className="font-bold text-xl mb-2">
